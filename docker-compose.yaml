@@ -1,0 +1,59 @@
+# IOT API dockers:
+# - mongo DB
+
+version: '2'
+services:
+
+  mongoDB:
+    #build:
+    #context: .
+    # #dockerfile: alternate-dockerfile
+    # #args:
+    image: mongo
+    restart: unless-stopped
+    # container_name implies only one instance
+    container_name: mongo-siame-container
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./mongo-siame:/data/db
+      # Below is ONLY FOR RESTORE!
+      #- /neocampus/backups/mongo/dump_jun19/dump:/dump:ro
+    network_mode: bridge
+      # Port mapping between the localhost and the container
+    ports:
+      - '27018:27017' # mongo engine
+      #command: --bind_ip_all --wiredTigerCacheSizeGB 4
+    command: --auth --bind_ip_all --wiredTigerCacheSizeGB 4
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    
+  domoticz:
+    image: sdesbure/domoticz
+    container_name: domoticz
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - WEBROOT=domoticz #optional
+    volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - ./siame-mongo:/data/db
+    depends_on:
+        - mongoDB
+    ports:
+      - 8080:8080
+    #   - 6144:6144
+    #   - 1443:1443
+    # devices:
+    #   - /etc/localtime:/etc/localtime:ro sdesbure/domoticz -wwbind 0.0.0.0 -verbose 1
+    restart: unless-stopped
+  nodered:
+    image: nodered/node-red-docker:latest
+    ports:
+      - "1880:1880"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./siame-mongo:/data/db
+    depends_on:
+        - mongoDB
