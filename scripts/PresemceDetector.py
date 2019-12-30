@@ -18,7 +18,7 @@ class PresenceDetector(AbstractDevice):
 
     def __init__(self, int_pin=20,
                  name="presence_detector",
-                 base_topic="/presence_detector/", delay_sec=60,
+                 base_topic="/1R1/014/presence/", delay_sec=60,
                  mqtt_ip="127.0.0.1", mqtt_port="1883"):
         self.pin = int_pin
         # Setting up GPIO

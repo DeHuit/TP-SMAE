@@ -1,0 +1,1 @@
+[{"id":"d27f4482.425cf8","type":"function","z":"7c9228b9.b3e008","name":"SaveShuttersStatus","func":"global.set(\"shutters\",  String(msg.payload.value.status));\nflow.set(\"idx\", 3)\nflow.set(\"nvalue\", 0);\nflow.set(\"svalue\", msg.payload.value.status);\nreturn msg;","outputs":1,"noerr":0,"x":500,"y":660,"wires":[["f20d3855.5ccd08"]]}]

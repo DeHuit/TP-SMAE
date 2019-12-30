@@ -17,7 +17,7 @@ class LampController(AbstractDevice):
 
     def __init__(self, lamp_pin=20,
                  name="lamp",
-                 base_topic="/lamp/", delay_sec=60,
+                 base_topic="/1R1/014/lamp/", delay_sec=60,
                  mqtt_ip="127.0.0.1", mqtt_port="1883"):
         self.pin = lamp_pin
         # Setting up GPIO
