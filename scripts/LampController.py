@@ -36,7 +36,7 @@ class LampController(AbstractDevice):
     def message_handler(self, payload):
         try :
             if payload['order'] == 'switch':
-                GPIO.output(GPIO.HIGH if payload['value'] else GPIO.LOW)
+                GPIO.output(GPIO.HIGH if payload['value'] == 'on' else GPIO.LOW)
 
         except KeyError:
             self.log.warning("Unknown order")
